@@ -1,4 +1,4 @@
-import UserServices from "../services/users.services.js";
+import UserServices from "../services/user.services.js";
 const userService = new UserServices();
 
 export default class UserController {
@@ -6,34 +6,33 @@ export default class UserController {
     console.log(req.body);
     try {
       const user = await userService.register(req.body);
-      if (user) res.redirect("/login");
-      else res.redirect("/register-error");
+      if (user) res.redirect("/views/login");
+      else res.redirect("/views/register-error");
     } catch (error) {
       next(error);
     }
   }
 
+  
   async login(req, res, next) {
-    try {
-      const { email, password } = req.body;
-      const user = await userService.login(email, password);
+  try {
+    const { email, password } = req.body;
+    const user = await userService.login(email, password);
 
-      if (user) {
-        req.session.email = email;
-        req.session.password = password;
+    if (user) {
+      req.session.email = email;
+      req.session.password = password;
 
-        if (user.role === "user") {
-          res.redirect("/profile");
-        } else if (user.role === "admin") {
-          res.redirect("/profile-admin");
-        } else {
-          res.redirect("/profile");
-        }
-      } else {
-        res.redirect("/register-error");
+      if (user.role === 'user') {
+        res.redirect('/views/profile');
+      } else if (user.role === 'admin') {
+        res.redirect('/views/admin-profile');
       }
-    } catch (error) {
-      next(error);
+    } else {
+      res.redirect('/views/register-error');
     }
+  } catch (error) {
+    next(error);
   }
+}
 }

@@ -1,11 +1,11 @@
-import { UserModel } from "../dao/mongoDB/models/user.model.js";
+import { UserModel } from "../models/user.model.js";
 
 export default class UserServices {
   async findByEmail(email) {
     return await UserModel.findOne({ email });
   }
 
-async register(user) {
+ async register(user) {
   try {
     const { email, password } = user;
 
@@ -28,6 +28,7 @@ async register(user) {
 
   async login(email, password) {
     try {
+     
       console.log('body', email, password);
       const userExist = await UserModel.findOne({ email, password });
       console.log('login::', userExist);
