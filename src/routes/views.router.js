@@ -35,12 +35,12 @@ router.get('/profile', (req, res)=>{
     res.render('profile')
 })
 
-router.get('/admin-profile', (req, res)=>{
-    res.render('admin-profile')
+router.get('/profile-admin', (req, res)=>{
+    res.render('profile-admin')
 })
 
 router.get('/register-error', (req, res)=>{
     res.render('register-error')
 })
 
-export default router;
+export default router; 

@@ -54,11 +54,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 app.use(express.static(__dirname + "/public"));
 
-app.use('/', viewsRouter);
+
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use('/api/chat', chatRouter);
-app.use('/users', usersRouter);
+app.use("/users", usersRouter);
+app.use('/', viewsRouter)
 
 const mongoStoreOptions = {
   mongoUrl: MONGO_URL,
