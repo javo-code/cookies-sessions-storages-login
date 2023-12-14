@@ -5,7 +5,7 @@ export default class UserServices {
     return await UserModel.findOne({ email });
   }
 
- async register(user) {
+async register(user) {
   try {
     const { email, password } = user;
 
@@ -28,7 +28,6 @@ export default class UserServices {
 
   async login(email, password) {
     try {
-     
       console.log('body', email, password);
       const userExist = await UserModel.findOne({ email, password });
       console.log('login::', userExist);

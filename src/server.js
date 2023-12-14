@@ -61,20 +61,22 @@ app.use('/api/chat', chatRouter);
 app.use('/users', usersRouter);
 
 const mongoStoreOptions = {
-  store: MongoStore.create({
-    mongoUrl: MONGO_URL,
-    ttl: 120,
-    crypto: {
-      secret: '1234'
-    }
-  }),
+  mongoUrl: MONGO_URL,
   secret: "1234",
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 120000,
-  },
+  ttl: 120, // tiempo de vida de la sesión en segundos
 };
+
+app.use(
+  session({
+    store: MongoStore.create(mongoStoreOptions),
+    secret: "1234",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 120000, // tiempo de vida de la cookie en milisegundos
+    },
+  })
+);
 
 app.use(errorHandler);
 
