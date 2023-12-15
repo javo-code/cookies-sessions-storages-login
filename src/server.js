@@ -9,7 +9,7 @@ import handlebars from 'express-handlebars';
 
 //-------------------------📌FILESTORE IMPORTS
 import sessionFileStore from "session-file-store";
-import cookieRouter from "./routes/cookie.router.js";
+import cookieRouter from "./routes/cookieFS.router.js";
 
 const app = express();
 
