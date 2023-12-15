@@ -7,9 +7,10 @@ import { __dirname } from './utils.js';
 
 //-------------------------📌VIEWS IMPORTS
 
+import handlebars from 'express-handlebars';
 import userRouter from "./routes/users.router.js";
 import viewsRouter from './routes/views.router.js'
-import handlebars from 'express-handlebars';
+
 
 //-------------------------📌APIS IMPORTS
 import cookiesRouter from "./routes/cookies.router.js";
@@ -68,6 +69,7 @@ const mongoStoreOptions = {
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
+app.use(express.static(__dirname + "/public"));
 
 app.engine('handlebars', handlebars.engine()); 
 app.set('view engine', 'handlebars');  
@@ -80,8 +82,9 @@ app.use(session(mongoStoreOptions));
 
 
 //-------------------------📌 VIEWS
+
 app.use("/users", userRouter);
-app.use('/views', viewsRouter);
+app.use('/', viewsRouter);
 
 //-------------------------📌APIS ROUTES
 app.use("/api/cookies", cookiesRouter);

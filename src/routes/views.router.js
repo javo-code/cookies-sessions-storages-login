@@ -1,6 +1,20 @@
 import { Router } from "express";
+import ProductDaoMongoDB from "../daos/mongoDB/products.dao.js";
+const prodDao = new ProductDaoMongoDB(); 
 
 const router = Router();
+
+router.get('/home', async (req, res) => {
+        res.render('home');
+});
+
+router.get('/realtimeproducts', (req, res) => {
+    res.render('realtimeproducts');
+});
+
+router.get('/chat', (req, res) => {
+    res.render('chat')
+});
 
 router.get('/login', (req, res)=>{
     res.render('login')
