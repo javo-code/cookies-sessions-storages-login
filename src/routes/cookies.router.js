@@ -5,7 +5,7 @@ import {
   logout,
   visit,
   infoSession,
-} from "../controllers/cookieFS.controller.js";
+} from "../controllers/cookies.controller.js";
 import { validateLogIn } from "../middlewares/middlewares.js";
 
 router.post("/login", login);

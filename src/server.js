@@ -1,19 +1,24 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+
 import { __dirname } from './utils.js';
-import userRouter from "./routes/user.router.js";
+import userRouter from "./routes/users.router.js";
 import viewsRouter from './routes/views.router.js'
 import "./db/connection.js";
 import handlebars from 'express-handlebars';
 
 //-------------------------📌FILESTORE IMPORTS
 import sessionFileStore from "session-file-store";
-import cookieRouter from "./routes/cookieFS.router.js";
+import cookieFSRouter from "./routes/cookies.router.js";
 
 const app = express();
 
 //-------------------------📌FILESTORE
+
+import MongoStore from "connect-mongo";
+import { connectionString } from "./db/connection.js";
+
 
 const FileStore = sessionFileStore(session)
 
@@ -31,6 +36,8 @@ const fileStoreOptions = {
   }
 }
 
+
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
@@ -43,11 +50,15 @@ app.set('views', __dirname+'/views');
 
 app.use(session(fileStoreOptions));
 
+
+//-------------------------📌 VIEWS
 app.use("/users", userRouter);
 app.use('/views', viewsRouter);
 
 //-------------------------📌APIS ROUTES
-app.use("/api/cookies", cookieRouter);
+app.use("/api/cookies", cookieFSRouter);
+//app.use("/api/cookiesMongo", cookieMongo);
+
 
 const PORT = 8080;
 app.listen(PORT, () => {
