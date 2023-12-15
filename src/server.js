@@ -2,30 +2,34 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import { __dirname } from './utils.js';
-import MongoStore from "connect-mongo";
 import userRouter from "./routes/user.router.js";
 import viewsRouter from './routes/views.router.js'
 import "./db/connection.js";
-import { connectionString } from "./db/connection.js";
 import handlebars from 'express-handlebars';
+
+//-------------------------📌FILESTORE IMPORTS
+import sessionFileStore from "session-file-store";
+import cookieRouter from "./routes/cookie.router.js";
 
 const app = express();
 
-const mongoStoreOptions = {
-  store: MongoStore.create({
-    mongoUrl: connectionString,
+//-------------------------📌FILESTORE
+
+const FileStore = sessionFileStore(session)
+
+const fileStoreOptions = {
+  store: new FileStore({
+    path: './sessions',
     ttl: 120,
-    crypto: {
-      secret: '1234'
-    }
+    reapInterval: 60
   }),
-  secret: "1234",
+  secret: '1234',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 120000,
-  },
-};
+    maxAge: 120000
+  }
+}
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
@@ -35,10 +39,15 @@ app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');  
 app.set('views', __dirname+'/views');  
 
-app.use(session(mongoStoreOptions));
+//-------------------------📌SESSION OPTION
+
+app.use(session(fileStoreOptions));
 
 app.use("/users", userRouter);
-app.use('/views', viewsRouter)
+app.use('/views', viewsRouter);
+
+//-------------------------📌APIS ROUTES
+app.use("/api/cookies", cookieRouter);
 
 const PORT = 8080;
 app.listen(PORT, () => {
