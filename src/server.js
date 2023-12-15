@@ -11,21 +11,24 @@ import userRouter from "./routes/users.router.js";
 import viewsRouter from './routes/views.router.js'
 import handlebars from 'express-handlebars';
 
-//-------------------------📌FILESTORE IMPORTS
-
-import sessionFileStore from "session-file-store";
+//-------------------------📌APIS IMPORTS
 import cookiesRouter from "./routes/cookies.router.js";
 
-//-------------------------📌FILESTORE
+
+//-------------------------📌FILESTORE IMPORTS
 /* 
+import sessionFileStore from "session-file-store";
+ */
+//-------------------------📌MONGOSTORE
+
 import MongoStore from "connect-mongo";
 import { connectionString } from "./db/connection.js";
- */
+
 
 const app = express();
 
 //-------------------------📌FILESTORE SESSION OPTIONS
-
+/* 
 const FileStore = sessionFileStore(session)
 
 const fileStoreOptions = {
@@ -41,16 +44,16 @@ const fileStoreOptions = {
     maxAge: 120000
   }
 }
-
+ */
 //-------------------------📌FILESTORE SESSION OPTIONS
-/* 
+
 const mongoStoreOptions = {
   store: MongoStore.create({
     mongoUrl: connectionString,
     ttl: 120,
     crypto: {
       secret: '1234'
-    }
+    } 
   }),
   secret: "1234",
   resave: false,
@@ -59,7 +62,7 @@ const mongoStoreOptions = {
     maxAge: 120000,
   },
 };
- */
+
 //-------------------------📌GENERAL SETTINGS
 
 app.use(express.json());
@@ -72,8 +75,8 @@ app.set('views', __dirname+'/views');
 
 //-------------------------📌SESSION OPTION
 
-app.use(session(fileStoreOptions));
-//app.use(session(mongoStoreOptions));
+//app.use(session(fileStoreOptions));
+app.use(session(mongoStoreOptions));
 
 
 //-------------------------📌 VIEWS
@@ -86,7 +89,7 @@ app.use("/api/cookies", cookiesRouter);
 
 const PORT = 8080;
 app.listen(PORT, () => {
-  console.log(`Servidor express escuchando en el puerto ${PORT}`);
+  console.log(`Server OK on port:: ${PORT}`);
 });
 
 export default app;
