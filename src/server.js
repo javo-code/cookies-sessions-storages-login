@@ -14,6 +14,8 @@ import viewsRouter from './routes/views.router.js'
 
 //-------------------------📌APIS IMPORTS
 import cookiesRouter from "./routes/cookies.router.js";
+import productsRouter from './routes/products.router.js';
+
 
 
 //-------------------------📌FILESTORE IMPORTS
@@ -88,6 +90,7 @@ app.use('/', viewsRouter);
 
 //-------------------------📌APIS ROUTES
 app.use("/api/cookies", cookiesRouter);
+app.use('/api/products', productsRouter);
 
 
 const PORT = 8080;

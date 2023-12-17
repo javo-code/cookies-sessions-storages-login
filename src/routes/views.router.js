@@ -1,11 +1,29 @@
 import { Router } from "express";
-import ProductDaoMongoDB from "../daos/mongoDB/products.dao.js";
-const prodDao = new ProductDaoMongoDB(); 
+//import fs from "fs";
+import ProductMongoDB from "../daos/mongoDB/products.dao.js";
+const prodDao = new ProductMongoDB();
+
+//const path = "src/data/products.json"
 
 const router = Router();
 
-router.get('/home', async (req, res) => {
-        res.render('home');
+/* router.get('/', async (req, res) => {
+    let productsJSON = await fs.promises.readFile(path, "utf-8");
+    let products = JSON.parse(productsJSON);
+    res.render('home', { products });
+}); */
+
+
+router.get('/', async (req, res) => {
+    try {
+        const result = await prodDao.getAll();
+        const products = result.payload.products;
+        // console.log(products);
+        res.render('home', { products });
+    } catch (error) {
+        console.error('Error al obtener productos:', error.message);
+        res.status(500).send('Error interno del servidor');
+    }
 });
 
 router.get('/realtimeproducts', (req, res) => {

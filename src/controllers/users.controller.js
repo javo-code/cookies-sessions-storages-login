@@ -34,12 +34,5 @@ export default class UserController {
   } catch (error) {
     next(error);
   }
-  }
-  
-  async logout(req, res) {
-  req.session.destroy(() => {
-    res.redirect("/login");
-    console.log(`Session closed`);
-  });
-};
+}
 }

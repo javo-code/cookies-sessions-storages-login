@@ -1,9 +1,9 @@
-import ProductDaoMongoDB from "../dao/mongoDB/products.dao.js";
+import ProductDaoMongoDB from "../daos/mongoDB/products.dao.js";
 const prodDao = new ProductDaoMongoDB(); 
 import fs from "fs";
 import { __dirname } from "../utils.js";
-import { ProductModel } from "../dao/mongoDB/models/products.model.js";
-import { CartModel } from "../dao/mongoDB/models/carts.model.js";
+import { ProductModel } from "../daos/mongoDB/models/products.model.js";
+import { CartModel } from "../daos/mongoDB/models/carts.model.js";
 
 const prodsFile = JSON.parse(
   fs.readFileSync(__dirname + "/data/products.json", "utf-8")
@@ -19,13 +19,22 @@ export const createFileProd = async () => {
   }
 };
 
-export const getAll = async (page, limit) => {
+export const getAll = async (page, limit, category, sortOrder) => {
   try {
-    return await prodDao.getAll(page, limit);
+    return await prodDao.getAll(page, limit, category, sortOrder);
   } catch (error) {
     console.log(error);
   }
 };
+
+export const getAllProds = async () => {
+  try {
+    return await prodDao.getAllProds();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 export const getById = async (id) => {
   try {
