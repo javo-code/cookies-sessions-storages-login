@@ -6,8 +6,8 @@ const path = 'src/data/products.json';
 
 export const getAll = async (req, res, next) => {
   try {
-    const { page, limit, category, sortOrder } = req.query;
-    const response = await service.getAll(page, limit, category, sortOrder);
+    const { page, limit } = req.query;
+    const response = await service.getAll(page, limit);
     res.status(200).json(response);
   } catch (error) {
     next(error.message);

@@ -13,7 +13,7 @@ const users = [
 export const login = (req, res) => {
   const { username, password } = req.body;
   const index = users.findIndex(
-    (aUser) => aUser.username === username && aUser.password === password
+    (user) => user.username === username && user.password === password
   );
   console.log(index);
   if (index < 0) res.status(401).json({ msg: "no estas autorizado" });
