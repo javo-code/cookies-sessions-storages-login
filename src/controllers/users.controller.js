@@ -24,9 +24,9 @@ export default class UserController {
       req.session.password = password;
 
       if (user.role === 'user') {
-        res.redirect('/profile');
+        res.redirect('/users/profile');
       } else if (user.role === 'admin') {
-        res.redirect('/admin-profile');
+        res.redirect('/users/admin-profile');
       }
     } else {
       res.redirect('/register-error');

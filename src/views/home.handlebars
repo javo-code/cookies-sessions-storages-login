@@ -1,31 +1,24 @@
-<h1>TODOS LOS PRODUCTOS:</h1>
-<ul>
-    {{#each products}}
-    <div class="card">
-        <li>
-            <strong>ID: </strong></p>{{id}}</p>
-        </li>
-        <li>
-            <strong>Nombre: </strong></p>{{title}}</p>
-        </li>
-        <li>
-            <strong>Descripción: </strong></p>{{description}}</p>
-        </li>
-        <li>
-            <strong>Código: </strong></p>{{code}}</p>
-        </li>
-        <li>
-            <strong>Precio: </strong></p>{{price}}</p>
-        </li>
-        <li>
-            <strong>Stock: </strong></p>{{stock}}</p>
-        </li>
-        <li>
-            <strong>Categoria: </strong></p>{{category}}</p>
-        </li>
-        <li>
-            <strong>Imagen: </strong></p>{{thumbnails}}</p>
-        </li>
+<div class="container-home">
+    <h1 class="title">NUEVA MEDICINA - INTERNACION DOMICILIARIA</h1>
+    <div>
+        {{#if session.welcomeMessage}}
+        <h1>{{session.welcomeMessage}}</h1>
+        {{/if}}
     </div>
-    {{/each}}
-</ul>
+    <div id="home">
+        {{#each products}}
+        <div class="card" style="width: 15rem;">
+            <img src="{{imageUrl}}" class="mx-auto img-thumbnail img" alt="{{title}}">
+            <div class="card_info card-body">
+                <h3 class="card-text">{{title}}</h3>
+                <p class="card-text"><strong>Precio: </strong> ${{price}}</p>
+                <p class="card-text"><strong>Stock: </strong>{{stock}}</p>
+                <p class="card-text"><strong>Categoria: </strong>{{category}}</p>
+            </div>
+            <div>
+                <button class="btn cart px-auto add-to-cart-btn" addProductID="{{_id}}">Añadir producto</button>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
