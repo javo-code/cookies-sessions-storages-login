@@ -50,6 +50,7 @@ async getAll(page = 1, limit = 10, category, sortOrder) {
         try {
             const response = await ProductModel.find({});
             return response;
+
         } catch (error) {
             console.log(error);
         }

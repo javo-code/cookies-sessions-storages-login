@@ -35,6 +35,7 @@ export const getAllProds = async () => {
   }
 };
 
+
 export const getById = async (id) => {
   try {
     const prod = await prodDao.getById(id);

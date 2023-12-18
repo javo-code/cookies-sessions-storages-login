@@ -14,7 +14,7 @@ export default class UserController {
   }
 
   
-  async login(req, res, next) {
+async login(req, res, next) {
   try {
     const { email, password } = req.body;
     const user = await userService.login(email, password);
@@ -30,9 +30,25 @@ export default class UserController {
       }
     } else {
       res.redirect('/register-error');
+
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
   }
-}
+
+async logout(req, res, next) {
+    try {
+      req.session.destroy((err) => {
+        if (err) {
+          console.error('Error clossing session:', err);
+          res.status(500).send('Error clossing session a users.controller');
+        } else {
+          res.redirect('/login');
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

@@ -4,6 +4,7 @@ const controller = new UserController();
 import ProductMongoDB from "../daos/mongoDB/products.dao.js";
 const prodDao = new ProductMongoDB();
 
+
 const router = Router();
 
 router.post("/register", controller.register);
@@ -43,7 +44,6 @@ router.get('/admin-profile', async (req, res) => {
 router.get('/register-error', (req, res)=>{
     res.render('register-error')
 })
-
 
 export default router;
 
