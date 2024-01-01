@@ -77,6 +77,7 @@ socketServer.on('connection', async (socket) => {
     socketServer.emit('messages', await msgDaoFS.getAll());
 
     socket.on('disconnect', ()=>console.log('🔴 ¡User disconnected from general chat!', socket.id));
+
     socket.on('newUser', (user)=>console.log(`⏩ ${user} inició sesión`));
 
     socket.on('chat:message', async(msg)=>{
