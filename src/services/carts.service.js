@@ -1,4 +1,3 @@
-import { CartModel } from "../dao/mongoDB/models/carts.model.js";
 const cartDao = new CartDaoMongoDB(); 
 import CartDaoMongoDB from "../dao/mongoDB/carts.dao.js";
 const prodDao = new PorductsDaoMongoDB();

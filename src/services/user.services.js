@@ -1,4 +1,5 @@
-import { UserModel } from "../models/user.model.js";
+import { UserModel } from "../daos/mongoDB/models/user.model.js";
+import { createHash, isValidPass } from "../utils.js";
 
 export default class UserServices {
   async findByEmail(email) {
@@ -16,7 +17,10 @@ export default class UserServices {
 
       const exists = await this.findByEmail(email);
       if (!exists) {
-        const newUser = await UserModel.create(user);
+        const newUser = await UserModel.create({
+          ...user,
+          password: createHash(password)
+        });
         return newUser;
       } else {
         return false;
@@ -26,13 +30,16 @@ export default class UserServices {
     }
   }
 
-  async login(email, password) {
+  async login(user) {
     try {
-      console.log('body', email, password);
-      const userExist = await UserModel.findOne({ email, password });
-      console.log('login =>', userExist);
-      if (!userExist) return false;
-      else return userExist;
+      const { email, password } = user;
+      const userExist = await UserModel.findOne({ email });
+      if (userExist) {
+        const isValidPassword = isValidPass(userExist, password);
+        console.log('isValid? =>', isValidPass);
+        if (!isValidPassword) return false;
+        else return userExist;
+      } return false;
     } catch (error) {
       console.log(error);
     }
